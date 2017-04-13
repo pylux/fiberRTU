@@ -11,4 +11,4 @@ arm-linux-gnueabihf-gcc -o alarmMain alarmMain.c common.c sql.c otdr.c uploadCyc
 
 arm-linux-gnueabihf-gcc -o ProtectMasterMain ProtectMasterMain.c sql.c  myModbus.c common.c process.c otdr.c uploadCycTestData.c -lmodbus -lsqlite3 -lcurl -lpthread
 
-arm-linux-gnueabihf-gcc -o ProtectSlaveMain ProtectSlaveMain.c myModbus.c common.c process.c sql.c -lmodbus -lsqlite3 -lpthread
+arm-linux-gnueabihf-gcc -o ProtectSlaveMain ProtectSlaveMain.c myModbus.c common.c process.c sql.c -lmodbus -lsqlite3 -lpthreadls

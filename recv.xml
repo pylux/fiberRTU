@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SegmentCode>
-<SetReferenceTime>
-<CMDcode>150</CMDcode>
+<RequestOpticalPower>
+<CMDcode>360</CMDcode>
 <R>*</R>
-<CM>1</CM>
+<CM>3</CM>
 <CLP>1</CLP>
-<T8>1477051906</T8>
-</SetReferenceTime>
+<SNo>10</SNo>
+</RequestOpticalPower>
 </SegmentCode>

@@ -28,8 +28,8 @@ CFLAGS = -g -O2 -pipe -Wall -I.
 
 YACC = yacc 
 LEX = lex 
-CC = gcc 
-CPP = gcc -E
+CC = arm-linux-gnueabihf-gcc 
+CPP = arm-linux-gnueabihf-gcc -E
 
 SOURCES = alias.c boa.c buffer.c cgi.c cgi_header.c config.c escape.c \
 	get.c hash.c ip.c log.c mmap_cache.c pipe.c queue.c read.c \

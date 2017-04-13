@@ -33,7 +33,7 @@ enum AlarmTestSegmentTable {eATT_SNo,eATT_rtuCM,eATT_rtuCLP,eATT_Level,eATT_PS,
                             eATT_T3,eATT_T4,eATT_fiberType,eATT_protectFlag,eATT_Status};
 typedef struct sql
 {      
-        sqlite3 *db;
+        sqlite3 * db;
         char    * tableName;                  
 	char    * filedsName;                             
 	char    * filedsValue;               

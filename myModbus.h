@@ -148,6 +148,8 @@
       MODULE_X_INFORMATION_ADDRESS+0x0008:模块使用状况  0(无保护)   1(有保护组但无监测参数)  2(有保护组且有测试参数)
       其中   X = 1 2 3 4 5 6 7 8 
 */
+
+
 #define  MODULE_1_INFORMATION_ADDRESS   0x0010
 #define  MODULE_2_INFORMATION_ADDRESS   0x0020
 #define  MODULE_3_INFORMATION_ADDRESS   0x0030
@@ -214,6 +216,7 @@ netInfor * newNetInfor();
 void freeNetInfor(netInfor *me);
 
 netInfor * modbus_TCP_listen(modbus_t * ctx);
+
 int createSlaverProtectModule(modbus_t *ctx,int16_t ModNo,int16_t CM,int16_t CLP);
 int setSlaverProtectGroup(modbus_t *ctx,int16_t ModNo,int16_t SNoA,int16_t SNoB,int16_t SwitchPos,int16_t ConnectPos);
 int setSlaverProtectGate(modbus_t *ctx,int16_t ModNo,float powerGateA,float powerGateB);
@@ -224,43 +227,34 @@ int initSlaver_Full(modbus_t *ctx,int16_t ModNo,int16_t CM,int16_t CLP,float pow
 int initSlaver_ModuelAndGroup(modbus_t *ctx,int16_t ModNo,int16_t CM,int16_t CLP,int16_t SNoA,int16_t SNoB,int16_t SwitchPos,int16_t ConnectPos);
 
 
-float   getOneOpticalValue(modbus_t *mb,int SNo,int Mode);                               //光功率采集  OK
+float   getOneOpticalValue(modbus_t *mb,int SNo,int Mode);                               //光功率采集  
 int     getMulOpticalValue(modbus_t *mb,int SNo,int16_t num,float * value);
-
 int16_t getErrorOpticalSNo(modbus_t *mb,int exintNo);                                    //获取异常光路
-
-int doOtdrSwitch(modbus_t * mb,int SNo,int onlyOne,int ModType);                                     //执行OTDR光开关切换 OK
-
+int doOtdrSwitch(modbus_t * mb,int SNo,int onlyOne,int ModType);                         //执行OTDR光开关切换 
 int setOneOpticalThreshold(modbus_t *mb,int SNo,float value);                            //设置、获取光功率阈值
 int16_t setMulOpticalThreshold(modbus_t *mb,int SNo, float *value, int num);
 float getOneOpticalThreshold (modbus_t *mb,int SNo);
 int16_t getMulOpticalThreshold (modbus_t *mb,int SNo,float *value, int num);
-
-
 int setOneOpticalOptimization(modbus_t *mb,int SNo);                                     //设置、获取光功率优化参数
 int16_t setMulOpticalOptimization(modbus_t *mb,int SNo, float *value, int num);
 float getOneOpticalOptimization (modbus_t *mb,int SNo);
 int16_t getMulOpticalOptimization (modbus_t *mb,int SNo,float * value,int num);
-
-int doOpticalProtectSwitch(modbus_t *mb,int SWNo,int flag,int Mode);                      //执行光保护切换
+int doOpticalProtectSwitch(modbus_t *mb,int SWNo,int flag,int Mode);                     //执行光保护切换
 int16_t setAllProtectSwitchAcross(modbus_t *mb,int devAddr);                             //设置2*2光开关组为平行
 int16_t setAllProtectSwitchParallel (modbus_t *mb,int devAddr);                          //设置2*2光开关组为交叉
-
 int16_t setSubDeviceBuad(modbus_t *mb,int devAddr,int buad);                             //设置子单元波特率
 int16_t getSubDeviceAddr(modbus_t *mb,int devAddr);                                      //匹配子单元通信地址
-
 int16_t setSubDeviceMode(modbus_t *mb,int devAddr,int Mode);                             //设置、获取子单元模式                
 int16_t getSubDeviceMode(modbus_t *mb,int devAddr);
-
 int16_t setPortOccopy(modbus_t *mb,int devAddr,unsigned char flag);                      //设置、获取子单元光端口占用信息
 unsigned char getPortOccopy(modbus_t *mb,int devAddr);                                   //获取设备状态
 int16_t getSubDeviceStatus(modbus_t *mb,int devAddr);
 
-int  initModbusPV();         //OK
-int  setModbusPV();          //OK
-void delModbusPV();          //OK
-int  setModbus_P();          //OK
-int  setModbus_V();          //OK
+int  initModbusPV();         
+int  setModbusPV();          
+void delModbusPV();          
+int  setModbus_P();          
+int  setModbus_V();          
 
 
 

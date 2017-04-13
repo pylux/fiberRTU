@@ -131,7 +131,7 @@ int upload(backData *bData,int SNo,int CM,int type)
 	curl_multi_cleanup(multi_handle);  
 	curl_easy_cleanup(curl);                                                   
 	curl_formfree(formpost);                                                     
-	curl_slist_free_all (headerlist);                                          
+	curl_slist_free_all(headerlist);                                          
         fclose(fptr);
         fptr=NULL;
         formpost=NULL;

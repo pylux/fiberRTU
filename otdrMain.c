@@ -475,9 +475,9 @@ void work_line(void)
                                     // remove(en_ORDRDATA);                             
 				     printf("-------OTDR--Test-------\n");
 			  	     linkHead = delete(linkHead,SNo,type);                                          
-			             }else{
-                                         linkHead = delete(linkHead,SNo,type);
-                                     }
+			  }else{
+                                 linkHead = delete(linkHead,SNo,type);
+                          }
 		  }else{
                           if(testPar->haveParm == 0){
                                  linkHead = delete(linkHead,SNo,type);

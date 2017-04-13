@@ -687,6 +687,32 @@ int deleteSlaverRecode(uint16_t ModNo){
        return 1;
 }
 
+int init_modbus_mapping(checkProtectNode *head){
+	checkProtectNode *p=NULL;
+        slaverModuleInformatin  *moduleState=NULL;
+        moduleState=newSlaverModule();
+
+	p= head;
+	if(p==NULL){
+		printf("Don't need to init modbus_mapping!\n");
+		return ;
+	}
+
+	while(p!=NULL){
+
+                moduleState->ModNo  = p->ModuleNo;
+                moduleState->detail = p->SNoA;
+                moduleState->detail = p->SNoB;
+                moduleState->detail.SwitchPosA = p->SwitchPos;
+                moduleState->detail.SwitchPosB = p->SwitchPos;
+                moduleState->detail.useFlag    = ON_autoPROTECT;
+                memcpy(modbus_mapping->tab_registers+(moduleState->ModNo*0x0010),moduleState,sizeof(uint16_t)*9);
+                p=p->next;
+	}
+        freeSlaverModule(moduleState);
+        moduleState=NULL;
+}
+
 int modbus_server(void)
 {
    // modbus_t *modbus_tcp = NULL;
@@ -708,6 +734,7 @@ int modbus_server(void)
         modbus_free(modbus_tcp);
         return -1;
     }
+    init_modbus_mapping(linkHead_check_A);
     modbus_set_debug(modbus_tcp, TRUE);
     serverInfor.server_socket = modbus_tcp_listen(modbus_tcp, NB_CONNECTION);
     if (serverInfor.server_socket == -1) {
@@ -1053,13 +1080,7 @@ void work_line(void)
         int ModuleNo=0,nowState=0,beforeState=0,SwitchPos=0,SNoA=0,SNoB=0,SWNoA=0,SWNoB=0;
         int swFlag=0;
         uint16_t SwitchPosStatus[2];
-        /*初始化测试链表*/
-        linkHead_check_A=InitA_CycleLink();
 
-        if(linkHead_check_A !=NULL)
-            output_all_protect_node(linkHead_check_A);
-        else
-            printf("linkA Head:NULL\n");
         /*执行调度程序*/
         while(1){
                 node=frist_protect_node(linkHead_check_A);                                          //获取待服务节点（头节点）                      
@@ -1222,6 +1243,15 @@ int main()
     //initLinkPV();
     setuptrap() ;
     signal(SIGINT, close_sigint);
+
+    /*初始化测试链表*/
+    linkHead_check_A=InitA_CycleLink();
+
+    if(linkHead_check_A !=NULL)
+        output_all_protect_node(linkHead_check_A);
+    else
+        printf("linkA Head:NULL\n");
+
 
     pthread_create(&tha,NULL,work_line,0);  
     pthread_create(&thb,NULL,modbus_server,0);  

@@ -1519,27 +1519,11 @@ void main(){
        /*初始化信号量*/
        sem_id        = semget((key_t)1234, 1, (4777 | IPC_CREAT ));                         //创建数据库信号量 :每一个需要用到信号量的进程,在第一次启动的时候需要获取指定的信号量
        modbus_sem_id = semget((key_t)5678, 1, (4777 | IPC_CREAT ));                         //创建ModBus信号量 :每一个需要用到信号量的进程,在第一次启动的时候需要获取指定的信号量
-       //otdr_sem_id   = semget((key_t)2468, 1, (4777 | IPC_CREAT ));                         //创建OTDR信号量   :每一个需要用到信号量的进程,在第一次启动的时候需要获取指定的信号量 
 
-       /*线程互斥锁*/
-       // pthread_mutex_init(&mutex,NULL); 
        myQueue = Queue_Initiate();
-       /*
-       flagCycle = get_pid_by_name("/web/cgi-bin/cycMain", cyclePID, MAX_PID_NUM);  
-       flagAlarm = get_pid_by_name("/web/cgi-bin/alarmMain", alarmPID, MAX_PID_NUM);  
-       if(flagCycle <=0 && flagAlarm <=0)
-          if(!setOTDRPV()) {                                                                //first launch (for modfiy)        
-            exit(0);
-       }*/
+
        work_line();      
-      //pthread_create(&thb,NULL,sigrecv_headle,(void *)(NULL));  
-      //pthread_create(&tha,NULL,work_line,(void *)(NULL));  
 
-      //pthread_join(thb,&retval);  
-      //pthread_join(thb,&retval);  
-
-       
- 
 }
 
 void addNewtoLink(int signum,siginfo_t *info,void *myact){
