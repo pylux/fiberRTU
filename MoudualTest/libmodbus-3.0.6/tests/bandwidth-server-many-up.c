@@ -22,7 +22,7 @@
 #include <errno.h>
 #include <signal.h>
 
-#include <modbus.h>
+#include <modbus/modbus.h>
 
 #if defined(_WIN32)
 #include <ws2tcpip.h>

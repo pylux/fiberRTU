@@ -395,6 +395,7 @@ responed *endCycletestSegment(mxml_node_t *cmd,mxml_node_t *tree,int cmdCode)
       {
             ret= endCycle(cmd,tree,cy_p);
             Cycle_Destory(cy_p);
+            printf("-------------------------- cycHere 3!\n");
             return ret;
       }	
          
@@ -460,8 +461,11 @@ responed *endCycle(mxml_node_t *root,mxml_node_t *tree,cycletest *cycfpar)
 	printf("The SNo = %d is canceled! Action:%d \n",cycfpar->Group[i].SNo,cycfpar->Action);
 
    }
+
     SQL_Destory(mysql);  
+
     sqlite3_close(mydb);
+    printf("-------------------------- cycHere 1!\n");
 /*******Send Signal to cycMain*******
 (1)向周期测试守护进程发送取消周期测试信号
 (2)注意一定要将发送程序和接收程序划到一个用户组，并且都具有root权限，否则信号发射会失败(BoaCgi 4777)
@@ -505,6 +509,7 @@ responed *endCycle(mxml_node_t *root,mxml_node_t *tree,cycletest *cycfpar)
 	      resp->Group[0].Error_inform = "Error:Don't have back process![周期测试取消失败-->未找到后台进程]";
 	      return resp;  
       }
+    printf("-------------------------- cycHere 2!\n");
       return resp;
 }
 

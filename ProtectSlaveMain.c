@@ -701,8 +701,8 @@ int init_modbus_mapping(checkProtectNode *head){
 	while(p!=NULL){
 
                 moduleState->ModNo  = p->ModuleNo;
-                moduleState->detail = p->SNoA;
-                moduleState->detail = p->SNoB;
+                moduleState->detail.SNoA = p->SNoA;
+                moduleState->detail.SNoB = p->SNoB;
                 moduleState->detail.SwitchPosA = p->SwitchPos;
                 moduleState->detail.SwitchPosB = p->SwitchPos;
                 moduleState->detail.useFlag    = ON_autoPROTECT;

@@ -1,7 +1,7 @@
 
 #include "myModbus.h"
 extern   int modbus_sem_id;  
-#define  Delag_TIME  0     //us
+#define  Delag_TIME  1000     //us
 const int16_t  OpticalPower_PATH_Mode2_Mode4[] = { 0x0008, 0x0007, 0x0006, 0x0005, 0x0004,0x0003, 0x0002, 0x0001};       //光功率采集通道选择，备纤模式+在纤（OPM）模式   (脚标是光路号1-8)
 const int16_t  OpticalPower_PATH_Mode3[]       = { 0x0008, 0x0000, 0x0006, 0x0000, 0x0007,0x0000, 0x0005, 0x0000};       //光功率采集通道选择,保护模式 (脚标是光路号1-8)
 const int16_t  OpticalPower_PATH_Mode5[]       = { 0x0008, 0x0007};
@@ -134,34 +134,18 @@ int getMulOpticalValue(modbus_t *mb,int SNo,int16_t num,float * value)
        for(i=0;i<regs;i++){
              value[i] =  ((float)tab_reg[i])/100.0;
        }
-      return regs;
+       return regs;
 }
 
 
-int doOtdrSwitch(modbus_t * mb,int SNo,int onlyOne,int ModType)
+int doSubModuleSwitch(modbus_t * mb,int SNo,int ModType)
 {
        int regs=-1;
        int otdrPort,subPort;
        otdrPort =((SNo-1)/8)+1;                    //OTDR子单元的1*8光开关号
        subPort =((SNo-1)%8)+1;                     //功能子单元模块上的1*8光开关号
-       //usleep(Delag_TIME);
-       modbus_set_slave(mb,0);                     //OTDR单元地址 
-       if(!onlyOne){ 
-               if(ModType == MODE3_PROTECT_MASTER )
-                  regs=modbus_write_register(mb,OTDRSWITCH_W_ADDRESS,otdrPort);
-               else
-                  regs=modbus_write_register(mb,OTDRSWITCH_W_ADDRESS,otdrPort);
-
-	       if(1 == regs){
-		     printf("OTDR单元模块1*8光开关切换成功-->otdrPort=%d\n",otdrPort);
-	       }else
-	       {
-		     printf("OTDR单元模块1*8光开关切换失败->back=%d\n",regs);
-		   return -1;
-	       }
-       }
        modbus_set_slave(mb,otdrPort);              //功能子单元地址   1-8
-       //usleep(Delag_TIME);
+       usleep(Delag_TIME);
        if( ModType ==  MODE3_PROTECT_MASTER )
              regs=modbus_write_register(mb,OTDRSWITCH_W_ADDRESS, OpticalOTDR_PATH_Protect[subPort-1]);
        else
@@ -170,13 +154,34 @@ int doOtdrSwitch(modbus_t * mb,int SNo,int onlyOne,int ModType)
               printf("功能子单元模块1*8光开关切换成功-->subPort=%d\n",subPort);
        }else
        {
-              printf("功能子单元模块1*8光开关切换失败-->back=%d\n",regs);
+              printf("功能子单元模块1*8光开关切换失败-->back=%d   otdrPort=%d   subPort=%d\n",regs,otdrPort,subPort);
               return -1;
        }
 
       return 0;
 }
+int doOtdrSwitch(modbus_t * mb,int SNo,int ModType)
+{
+       int regs=-1;
+       int otdrPort,subPort;
+       otdrPort =((SNo-1)/8)+1;                    //OTDR子单元的1*8光开关号
+       subPort =((SNo-1)%8)+1;                     //功能子单元模块上的1*8光开关号
+       usleep(Delag_TIME);
+       modbus_set_slave(mb,0);                     //OTDR单元地址 
+       if(ModType == MODE3_PROTECT_MASTER )
+          regs=modbus_write_register(mb,OTDRSWITCH_W_ADDRESS,otdrPort);
+        else
+          regs=modbus_write_register(mb,OTDRSWITCH_W_ADDRESS,otdrPort);
 
+	if(1 == regs){
+		printf("OTDR单元模块1*8光开关切换成功-->otdrPort=%d\n",otdrPort);
+	}else
+	{
+		printf("OTDR单元模块1*8光开关切换失败->back=%d\n",regs);
+		return -1;
+	}
+      return 0;
+}
 
 
 

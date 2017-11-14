@@ -230,7 +230,8 @@ int initSlaver_ModuelAndGroup(modbus_t *ctx,int16_t ModNo,int16_t CM,int16_t CLP
 float   getOneOpticalValue(modbus_t *mb,int SNo,int Mode);                               //光功率采集  
 int     getMulOpticalValue(modbus_t *mb,int SNo,int16_t num,float * value);
 int16_t getErrorOpticalSNo(modbus_t *mb,int exintNo);                                    //获取异常光路
-int doOtdrSwitch(modbus_t * mb,int SNo,int onlyOne,int ModType);                         //执行OTDR光开关切换 
+int doOtdrSwitch(modbus_t * mb,int SNo,int ModType);                         //执行OTDR光开关切换 
+int doSubModuleSwitch(modbus_t * mb,int SNo,int ModType);
 int setOneOpticalThreshold(modbus_t *mb,int SNo,float value);                            //设置、获取光功率阈值
 int16_t setMulOpticalThreshold(modbus_t *mb,int SNo, float *value, int num);
 float getOneOpticalThreshold (modbus_t *mb,int SNo);

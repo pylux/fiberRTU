@@ -1179,8 +1179,8 @@ alarmNode  *rollPolingProtect(checkProtectNode *headA,alarmNode *headB)
                         SWPos_Send=subPort==1?PARALLEL:ACROSS;
 		     }
 		     if(subPort==3 || subPort==7){
-                        SWNo_Recv =(moduleNo-3)*4  + SW_C;
-                        SWNo_Send =(moduleNo-3)*4 + SW_D;
+                        SWNo_Recv =(moduleNo-1)*4  + SW_C;
+                        SWNo_Send =(moduleNo-1)*4  + SW_D;
                         SWPos_Recv=subPort==3?PARALLEL:ACROSS;
                         SWPos_Send=subPort==3?PARALLEL:ACROSS;
                      }

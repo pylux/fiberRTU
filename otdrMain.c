@@ -443,9 +443,17 @@ void work_line(void)
 			   if(!setModbus_P())                                                //P
 				 exit(EXIT_FAILURE); 
 			   otdrSWFlag=-1;
-			   mb =newModbus(MODBUS_DEV,MODBUS_BUAD);
-		           otdrSWFlag = doOtdrSwitch(mb,SNo,onlyOne_Moudle,ModuleType); 
-                           freeModbus(mb);
+                           if(onlyOne_Moudle==0){                                            //otdr光开关切换  
+				   mb =newModbus(MODBUS_DEV,MODBUS_BUAD);
+				   otdrSWFlag = doOtdrSwitch(mb,SNo,ModuleType);
+		                   freeModbus(mb);
+                           }
+                           sleep(1);
+                           printf("sleep a while\n");
+			   mb =newModbus(MODBUS_DEV,MODBUS_BUAD);                            //单元板光开关切换
+			   otdrSWFlag = doSubModuleSwitch(mb,SNo,ModuleType);
+		           freeModbus(mb); 
+                           
 			   if(!setModbus_V())                                                //V
 				 exit(EXIT_FAILURE); 
                            //otdrSWFlag=0;
@@ -456,6 +464,7 @@ void work_line(void)
 					printf("Excess OTDR Test ------------------------------------------------------------------>周期测试       SNo=%d\n",SNo);
 				     if(type==1)
 					printf("Excess OTDR Test ------------------------------------------------------------------>点名测试       SNo=%d masterPID:%d\n",SNo,masterPID);
+                                     sleep(1);
 				     OtdrTest(testPar);	  
 				     if(type == 1){
 				          SMQstr = (char*)malloc(sizeof(char)*20);
